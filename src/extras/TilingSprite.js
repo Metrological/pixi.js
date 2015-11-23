@@ -85,7 +85,7 @@ function TilingSprite(texture, width, height)
         '   coord /= uTransform.zw;',
         '   vTextureCoord = coord;',
 
-        '   vColor = vec4(aColor.rgb * aColor.a, aColor.a);',
+        '   vColor = aColor;',
         '}'
       ].join('\n'),
       [
@@ -104,7 +104,7 @@ function TilingSprite(texture, width, height)
         '   coord = clamp(coord, uPixelSize, uFrame.zw - uPixelSize);',
         '   coord += uFrame.xy;',
 
-        '   gl_FragColor =  texture2D(uSampler, coord) * vColor ;',
+        '   gl_FragColor =  texture2D(uSampler, coord) * vec4(vColor.rgb * vColor.a, vColor.a);',
         '}'
       ].join('\n'),
 

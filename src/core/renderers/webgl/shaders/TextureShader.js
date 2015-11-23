@@ -85,7 +85,7 @@ TextureShader.defaultVertexSrc = [
     'void main(void){',
     '   gl_Position = vec4((projectionMatrix * vec3(aVertexPosition, 1.0)).xy, 0.0, 1.0);',
     '   vTextureCoord = aTextureCoord;',
-    '   vColor = vec4(aColor.rgb * aColor.a, aColor.a);',
+    '   vColor = aColor;',
     '}'
 ].join('\n');
 
@@ -104,6 +104,6 @@ TextureShader.defaultFragmentSrc = [
     'uniform sampler2D uSampler;',
 
     'void main(void){',
-    '   gl_FragColor = texture2D(uSampler, vTextureCoord) * vColor ;',
+    '   gl_FragColor = texture2D(uSampler, vTextureCoord) * vec4(vColor.rgb * vColor.a, vColor.a);',
     '}'
 ].join('\n');
