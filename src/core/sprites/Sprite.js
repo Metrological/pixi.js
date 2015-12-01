@@ -59,12 +59,16 @@ function Sprite(texture)
     this._height = 0;
 
     /**
-     * The tint applied to the sprite. This is a hex value. A value of 0xFFFFFF will remove any tint effect.
+     * The tint applied to the sprite, per corner. This is a hex value. A value of 0xFFFFFF will remove any tint effect.
+     * Note: per-corner tinting (gradients) only works on WebGLRenderer, not on CanvasRenderer.
      *
      * @member {number}
      * @default 0xFFFFFF
      */
-    this.tint = 0xFFFFFF;
+    this.tintTopLeft = 0xFFFFFF;
+    this.tintTopRight = 0xFFFFFF;
+    this.tintBottomLeft = 0xFFFFFF;
+    this.tintBottomRight = 0xFFFFFF;
 
     /**
      * The blend mode to be applied to the sprite. Apply a value of `PIXI.BLEND_MODES.NORMAL` to reset the blend mode.
@@ -133,6 +137,99 @@ Object.defineProperties(Sprite.prototype, {
         {
             this.scale.y = utils.sign(this.scale.y) * value / this.texture._frame.height;
             this._height = value;
+        }
+    },
+
+    /**
+     * The global tint of the sprite, a hex value
+     *
+     * @member {number}
+     * @memberof PIXI.Sprite#
+     */
+    tint: {
+        get: function ()
+        {
+            // We assume that the invoker does not use per-corner tinting if he uses this getter.
+            return this.tintTopLeft;
+        },
+        set: function (value)
+        {
+            this.tintTopLeft = value;
+            this.tintTopRight = value;
+            this.tintBottomLeft = value;
+            this.tintBottomRight = value;
+        }
+    },
+
+    /**
+     * The left side tint of the sprite, a hex value
+     *
+     * @member {number}
+     * @memberof PIXI.Sprite#
+     */
+    tintLeft: {
+        get: function ()
+        {
+            return this.tintTopLeft;
+        },
+        set: function (value)
+        {
+            this.tintTopLeft = value;
+            this.tintBottomLeft = value;
+        }
+    },
+
+    /**
+     * The top side tint of the sprite, a hex value
+     *
+     * @member {number}
+     * @memberof PIXI.Sprite#
+     */
+    tintTop: {
+        get: function ()
+        {
+            return this.tintTopLeft;
+        },
+        set: function (value)
+        {
+            this.tintTopLeft = value;
+            this.tintTopRight = value;
+        }
+    },
+
+    /**
+     * The bottom side tint of the sprite, a hex value
+     *
+     * @member {number}
+     * @memberof PIXI.Sprite#
+     */
+    tintBottom: {
+        get: function ()
+        {
+            return this.tintBottomLeft;
+        },
+        set: function (value)
+        {
+            this.tintBottomLeft = value;
+            this.tintBottomRight = value;
+        }
+    },
+
+    /**
+     * The right side tint of the sprite, a hex value
+     *
+     * @member {number}
+     * @memberof PIXI.Sprite#
+     */
+    tintRight: {
+        get: function ()
+        {
+            return this.tintTopRight;
+        },
+        set: function (value)
+        {
+            this.tintTopRight = value;
+            this.tintBottomRight = value;
         }
     },
 

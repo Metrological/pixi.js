@@ -268,8 +268,10 @@ SpriteRenderer.prototype.render = function (sprite)
     positions[index+18] = uvs.y3;
 
     // color and alpha
-    var tint = sprite.tint;
-    colors[index+4] = colors[index+9] = colors[index+14] = colors[index+19] = (tint >> 16) + (tint & 0xff00) + ((tint & 0xff) << 16) + (sprite.worldAlpha * 255 << 24);
+    colors[index+4] = (sprite.tintTopLeft >> 16) + (sprite.tintTopLeft & 0xff00) + ((sprite.tintTopLeft & 0xff) << 16) + (sprite.worldAlpha * 255 << 24);
+    colors[index+9] = (sprite.tintTopRight >> 16) + (sprite.tintTopRight & 0xff00) + ((sprite.tintTopRight & 0xff) << 16) + (sprite.worldAlpha * 255 << 24);
+    colors[index+14] = (sprite.tintBottomLeft >> 16) + (sprite.tintBottomLeft & 0xff00) + ((sprite.tintBottomLeft & 0xff) << 16) + (sprite.worldAlpha * 255 << 24);
+    colors[index+19] = (sprite.tintBottomRight >> 16) + (sprite.tintBottomRight & 0xff00) + ((sprite.tintBottomRight & 0xff) << 16) + (sprite.worldAlpha * 255 << 24);
 
     // increment the batchsize
     this.sprites[this.currentBatchSize++] = sprite;
